@@ -146,6 +146,32 @@ public class solicitudProduccionController {
             }
         };
         new Thread(cargar).start();
+
+        dpFechaSolicitud.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaSolicitud.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaSolicitud.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de solicitud no puede ser anterior a hoy.");
+            }
+        });
+        dpFechaProduccion.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaProduccion.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaProduccion.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de producción no puede ser anterior a hoy.");
+            }
+        });
+
         generarSiguienteId();
     }
 
@@ -175,8 +201,16 @@ public class solicitudProduccionController {
         } catch (NumberFormatException ex) {
             mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
+    }
+
+    @FXML
+    private void abrirBuscadorProductoSolicitud() {
+        popupBuscarProductoController.mostrar(codigo -> {
+            txtCodigoDetalle.setText(codigo);
+            buscarProductoDetalle();
+        });
     }
 
     // buscar producto para el detalle
@@ -200,7 +234,7 @@ public class solicitudProduccionController {
                 lblProductoDetalle.setText("No encontrado");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -309,7 +343,7 @@ public class solicitudProduccionController {
             limpiar();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -370,7 +404,7 @@ public class solicitudProduccionController {
             limpiar();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -410,7 +444,7 @@ public class solicitudProduccionController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Solicitud eliminada correctamente.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -478,7 +512,7 @@ public class solicitudProduccionController {
                 productos.append(rs.getString("producto"));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
             return;
         }
 
@@ -519,7 +553,7 @@ public class solicitudProduccionController {
                             "Solicitud convertida a Orden de Producción con " + listaDetalle.size() + " producto(s).");
 
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al convertir", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al convertir", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -586,7 +620,7 @@ public class solicitudProduccionController {
             }
         } catch (Exception e) {
             Platform.runLater(() ->
-                mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar solicitudes", e.getMessage()));
+                mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar solicitudes", "Ocurrió un error. Intente de nuevo."));
             return;
         }
         // actualiza la ui desde el hilo de javafx
@@ -615,7 +649,7 @@ public class solicitudProduccionController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -660,6 +694,14 @@ public class solicitudProduccionController {
     private boolean validarCampos() {
         if (dpFechaSolicitud.getValue() == null || dpFechaProduccion.getValue() == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Fechas requeridas", "Completa las fechas de solicitud y producción.");
+            return false;
+        }
+        if (dpFechaSolicitud.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de solicitud no puede ser anterior a hoy.");
+            return false;
+        }
+        if (dpFechaProduccion.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de producción no puede ser anterior a hoy.");
             return false;
         }
         if (idResponsableSeleccionado == 0) {

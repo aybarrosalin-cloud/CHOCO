@@ -119,7 +119,7 @@ public class consultaOrdenClienteController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar ordenes: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar ordenes: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

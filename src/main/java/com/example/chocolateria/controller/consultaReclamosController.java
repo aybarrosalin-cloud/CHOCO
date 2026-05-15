@@ -106,7 +106,7 @@ public class consultaReclamosController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar reclamos: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar reclamos: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

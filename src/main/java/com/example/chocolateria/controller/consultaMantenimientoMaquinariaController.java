@@ -95,7 +95,7 @@ public class consultaMantenimientoMaquinariaController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar mantenimientos: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar mantenimientos: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

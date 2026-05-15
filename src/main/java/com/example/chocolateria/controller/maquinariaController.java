@@ -92,7 +92,7 @@ public class maquinariaController {
                 tmpMapa.put(nombre, id);
             }
         } catch (Exception e) {
-            String msg = e.getMessage();
+            String msg = "Ocurrió un error. Intente de nuevo.";
             Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR, "Error", msg));
             return;
         }
@@ -130,7 +130,7 @@ public class maquinariaController {
             limpiar();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -167,7 +167,7 @@ public class maquinariaController {
             limpiar();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -193,7 +193,7 @@ public class maquinariaController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Maquinaria eliminada correctamente.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -242,7 +242,7 @@ public class maquinariaController {
                     "No existe una maquinaria con el ID " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

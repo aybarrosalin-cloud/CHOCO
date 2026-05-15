@@ -139,6 +139,14 @@ public class pagoCompraController {
         generarSiguienteId();
     }
 
+    @FXML
+    private void abrirBuscadorRecepcion() {
+        popupBuscarRecepcionController.mostrar(id -> {
+            txtIdRecepcion.setText(id);
+            cargarDesdeRecepcion();
+        });
+    }
+
     // cargar datos desde recepcion
     @FXML
     private void cargarDesdeRecepcion() {
@@ -168,7 +176,7 @@ public class pagoCompraController {
         } catch (NumberFormatException ex) {
             mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -212,7 +220,7 @@ public class pagoCompraController {
                     "Deuda registrada. Ahora puedes ir registrando los abonos.");
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -296,7 +304,7 @@ public class pagoCompraController {
         } catch (NumberFormatException ex) {
             mostrarAlerta(Alert.AlertType.WARNING, "Monto inválido", "El monto debe ser un número válido.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar abono", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar abono", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -364,7 +372,7 @@ public class pagoCompraController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Deuda eliminada correctamente.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -422,7 +430,7 @@ public class pagoCompraController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar deudas", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar deudas", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -448,7 +456,7 @@ public class pagoCompraController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar abonos", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar abonos", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

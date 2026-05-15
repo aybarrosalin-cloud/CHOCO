@@ -108,7 +108,7 @@ public class consultaEnviosController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar envios: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar envios: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

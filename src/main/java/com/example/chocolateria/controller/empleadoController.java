@@ -83,7 +83,7 @@ public class empleadoController {
             limpiar();
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -114,7 +114,7 @@ public class empleadoController {
             limpiar();
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -141,7 +141,7 @@ public class empleadoController {
                     limpiar();
 
                 } catch (SQLException e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -167,7 +167,7 @@ public class empleadoController {
             mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Empleado marcado como " + nuevoEstado + ".");
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -213,7 +213,7 @@ public class empleadoController {
             }
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

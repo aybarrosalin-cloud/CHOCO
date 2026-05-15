@@ -140,6 +140,7 @@
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="ID Cliente" />
                                 <HBox spacing="6">
                                     <TextField fx:id="txtIdCliente" prefHeight="28" prefWidth="80" promptText="ID…" style="-fx-background-color:white; -fx-text-fill:black;                                                       -fx-border-color:purple; -fx-border-radius:6;                                                       -fx-background-radius:6;" />
+                                    <Button text="🔍" onAction="#abrirBuscadorCliente" prefHeight="28" prefWidth="32" style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" />
                                     <Button onAction="#buscarCliente" prefHeight="28" prefWidth="70" style="-fx-background-color:#6d3c87; -fx-text-fill:white;                                                    -fx-font-weight:bold; -fx-background-radius:8;" text="Buscar" />
                                     <Label fx:id="lblNombreCliente" style="-fx-text-fill:#3B1A5C; -fx-font-size:11px; -fx-font-weight:bold;" text="" />
                                 </HBox>

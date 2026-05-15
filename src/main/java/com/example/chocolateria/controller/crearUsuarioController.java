@@ -84,7 +84,7 @@ public class crearUsuarioController {
                 cbDepartamento.getItems().add(nombre);
             }
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los departamentos: " + e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudieron cargar los departamentos: " + "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -115,7 +115,7 @@ public class crearUsuarioController {
             limpiar();
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -164,7 +164,7 @@ public class crearUsuarioController {
             limpiar();
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -191,7 +191,7 @@ public class crearUsuarioController {
                     limpiar();
 
                 } catch (SQLException e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -217,7 +217,7 @@ public class crearUsuarioController {
             limpiar();
 
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -262,7 +262,7 @@ public class crearUsuarioController {
                         "No existe ningún usuario con el ID " + idBuscar + ".");
             }
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

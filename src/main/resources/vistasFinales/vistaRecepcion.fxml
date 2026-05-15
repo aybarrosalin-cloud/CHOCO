@@ -133,6 +133,7 @@
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="Número de orden" />
                                 <HBox spacing="6">
                                     <TextField fx:id="txtNumeroOrden" prefHeight="28" prefWidth="100" promptText="Nº orden…" style="-fx-background-color:white; -fx-text-fill:black;                                                       -fx-border-color:purple; -fx-border-radius:6;                                                       -fx-background-radius:6;" />
+                                    <Button text="🔍" onAction="#abrirBuscadorOrdenProveedor" prefHeight="28" prefWidth="32" style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" />
                                     <Button onAction="#cargarDesdeOrden" prefHeight="28" prefWidth="145" style="-fx-background-color:#48295a; -fx-text-fill:white;                                                    -fx-font-weight:bold; -fx-background-radius:8;" text="📋  Cargar desde orden" />
                                 </HBox>
                             </VBox>
@@ -175,6 +176,7 @@
 
                         <HBox alignment="CENTER_LEFT" spacing="10">
                             <TextField fx:id="txtCodigoDetalle" prefHeight="28" prefWidth="110" promptText="Código" style="-fx-background-color:white; -fx-text-fill:black;                                               -fx-border-color:#C5A8E8; -fx-border-radius:6;                                               -fx-background-radius:6;" />
+                            <Button text="🔍" onAction="#abrirBuscadorProductoRecepcion" prefHeight="28" prefWidth="32" style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" />
                             <Button onAction="#buscarProductoDetalle" prefHeight="28" prefWidth="70" style="-fx-background-color:#6d3c87; -fx-text-fill:white;                                            -fx-font-weight:bold; -fx-background-radius:8;" text="Buscar" />
                             <Label fx:id="lblNombreProducto" style="-fx-text-fill:#3B1A5C; -fx-font-size:11px; -fx-font-weight:bold; -fx-min-width:140;" text="" />
                             <TextField fx:id="txtCantidadDetalle" prefHeight="28" prefWidth="80" promptText="Cantidad" style="-fx-background-color:white; -fx-text-fill:black;                                               -fx-border-color:#C5A8E8; -fx-border-radius:6;                                               -fx-background-radius:6;" />

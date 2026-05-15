@@ -90,7 +90,7 @@ public class consultaSuplidoresController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar suplidores: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar suplidores: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

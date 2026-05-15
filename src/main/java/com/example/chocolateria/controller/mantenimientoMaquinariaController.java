@@ -76,6 +76,19 @@ public class mantenimientoMaquinariaController {
             }
         };
         new Thread(cargar).start();
+
+        dpProximoMantenimiento.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpProximoMantenimiento.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpProximoMantenimiento.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha del próximo mantenimiento no puede ser anterior a hoy.");
+            }
+        });
     }
 
     private void cargarMaquinas() {
@@ -155,7 +168,7 @@ public class mantenimientoMaquinariaController {
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Costo inválido", "El costo debe ser un número válido.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -195,7 +208,7 @@ public class mantenimientoMaquinariaController {
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Costo inválido", "El costo debe ser un número válido.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -224,7 +237,7 @@ public class mantenimientoMaquinariaController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Registro eliminado correctamente.");
                     limpiarCampos();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -275,7 +288,7 @@ public class mantenimientoMaquinariaController {
             }
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -314,6 +327,10 @@ public class mantenimientoMaquinariaController {
                 cbEstadoMaquina.getValue() == null       ||
                 cbTipoMantenimiento.getValue() == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa todos los campos obligatorios.");
+            return false;
+        }
+        if (dpProximoMantenimiento.getValue() != null && dpProximoMantenimiento.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha del próximo mantenimiento no puede ser anterior a hoy.");
             return false;
         }
         return true;

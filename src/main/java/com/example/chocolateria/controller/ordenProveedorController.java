@@ -79,6 +79,20 @@ public class ordenProveedorController {
             }
         };
         new Thread(cargar).start();
+
+        dpFechaRequerida.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaRequerida.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaRequerida.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha requerida no puede ser anterior a hoy.");
+            }
+        });
+
         generarSiguienteId();
     }
 
@@ -97,11 +111,33 @@ public class ordenProveedorController {
                 tmpMapa.put(item, rnc);
             }
         } catch (Exception e) {
-            String msg = e.getMessage();
+            String msg = "Ocurrió un error. Intente de nuevo.";
             Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR,"Error",msg));
             return;
         }
         Platform.runLater(() -> { cbRncProveedor.getItems().addAll(tmpItems); mapaRncNombre.putAll(tmpMapa); });
+    }
+
+    @FXML
+    private void abrirBuscadorSuplidor() {
+        popupBuscarSuplidorController.mostrar(item -> {
+            if (cbRncProveedor.getItems().contains(item)) {
+                cbRncProveedor.setValue(item);
+            } else {
+                cbRncProveedor.getItems().add(item);
+                String rnc = item.contains(" - ") ? item.split(" - ", 2)[0] : item;
+                mapaRncNombre.put(item, rnc);
+                cbRncProveedor.setValue(item);
+            }
+        });
+    }
+
+    @FXML
+    private void abrirBuscadorProductoOrden() {
+        popupBuscarProductoController.mostrar(codigo -> {
+            txtCodigoProducto.setText(codigo);
+            buscarProducto();
+        });
     }
 
     @FXML
@@ -120,7 +156,7 @@ public class ordenProveedorController {
                 productoSeleccionado = "";
                 lblNombreProducto.setText("No encontrado");
             }
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error","Ocurrió un error. Intente de nuevo."); }
     }
 
     @FXML
@@ -184,7 +220,7 @@ public class ordenProveedorController {
 
             mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Orden #" + nuevoId + " guardada.");
             limpiar();
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar","Ocurrió un error. Intente de nuevo."); }
     }
 
     @FXML
@@ -224,7 +260,7 @@ public class ordenProveedorController {
 
             mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Orden actualizada correctamente.");
             limpiar();
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al editar",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al editar","Ocurrió un error. Intente de nuevo."); }
     }
 
     @FXML
@@ -246,7 +282,7 @@ public class ordenProveedorController {
                     listaDetalle.clear();
                     mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Orden eliminada correctamente.");
                     limpiar();
-                } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar",e.getMessage()); }
+                } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar","Ocurrió un error. Intente de nuevo."); }
             }
         });
     }
@@ -308,7 +344,7 @@ public class ordenProveedorController {
                 rs.getInt("id_detalle"), rs.getInt("id_orden"),
                 rs.getString("codigo_prod"), rs.getString("producto"),
                 rs.getInt("cantidad"), rs.getDouble("precio")));
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al cargar detalle",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al cargar detalle","Ocurrió un error. Intente de nuevo."); }
     }
 
     private void cargarEnFormulario(ordenProveedorModelo o) {
@@ -354,6 +390,10 @@ public class ordenProveedorController {
     private boolean validarCampos() {
         if (cbRncProveedor.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona un proveedor."); return false; }
         if (dpFechaRequerida.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona la fecha requerida."); return false; }
+        if (dpFechaRequerida.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha requerida no puede ser anterior a hoy.");
+            return false;
+        }
         if (cbPrioridad.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona la prioridad."); return false; }
         if (cbEstadoPago.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona el estado de pago."); return false; }
         if (listaDetalle.isEmpty()) { mostrarAlerta(Alert.AlertType.WARNING,"Productos requeridos","Agrega al menos un producto."); return false; }

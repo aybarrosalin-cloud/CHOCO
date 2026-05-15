@@ -95,8 +95,24 @@ public class recepcionController {
                         "No existe un producto con el código " + codigo + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
+    }
+
+    @FXML
+    private void abrirBuscadorOrdenProveedor() {
+        popupBuscarOrdenProveedorController.mostrar(codigo -> {
+            txtNumeroOrden.setText(codigo);
+            cargarDesdeOrden();
+        });
+    }
+
+    @FXML
+    private void abrirBuscadorProductoRecepcion() {
+        popupBuscarProductoController.mostrar(codigo -> {
+            txtCodigoDetalle.setText(codigo);
+            buscarProductoDetalle();
+        });
     }
 
     @FXML
@@ -122,7 +138,7 @@ public class recepcionController {
                         "No se encontró ninguna orden con ese número.");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -246,7 +262,7 @@ public class recepcionController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -280,7 +296,7 @@ public class recepcionController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Recepción eliminada correctamente.");
                     limpiarCampos();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -325,7 +341,7 @@ public class recepcionController {
                 mostrarAlerta(Alert.AlertType.WARNING, "No encontrado", "No existe una recepción con el ID " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -368,7 +384,7 @@ public class recepcionController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

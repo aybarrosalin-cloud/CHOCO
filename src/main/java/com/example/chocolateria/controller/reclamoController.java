@@ -92,6 +92,14 @@ public class reclamoController {
     }
 
     @FXML
+    private void abrirBuscadorCliente() {
+        popupBuscarClienteController.mostrar(c -> {
+            txtIdCliente.setText(String.valueOf(c.getIdCliente()));
+            buscarNombreCliente();
+        });
+    }
+
+    @FXML
     private void buscarNombreCliente() {
         String idTexto = txtIdCliente.getText().trim();
         if (idTexto.isEmpty()) {
@@ -125,7 +133,7 @@ public class reclamoController {
         } catch (NumberFormatException e) {
             txtNombreCliente.clear();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -151,7 +159,7 @@ public class reclamoController {
         } catch (NumberFormatException e) {
             txtNombreEmpleado.clear();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -185,7 +193,7 @@ public class reclamoController {
                 mapaOrdenes.put(item, idOrden);
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar ordenes", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar ordenes", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -238,7 +246,7 @@ public class reclamoController {
 
             limpiar();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -277,7 +285,7 @@ public class reclamoController {
             mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "Reclamo actualizado correctamente.");
             limpiar();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -299,7 +307,7 @@ public class reclamoController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "Reclamo eliminado correctamente.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -442,7 +450,7 @@ public class reclamoController {
         try (java.sql.Connection conn = new conexion().establecerConexion()) {
             JasperReportUtil.mostrarReporte("/reportes/lachoco_reclamo.jrxml", params, conn);
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

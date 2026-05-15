@@ -126,7 +126,7 @@ public class consultasController {
             ResultSet rs = ps.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) return true;
         } catch (SQLException e) {
-            mostrarAlerta("Error al verificar la clave: " + e.getMessage());
+            mostrarAlerta("Error al verificar la clave: " + "Ocurrió un error. Intente de nuevo.");
         }
 
         mostrarAlerta("Contraseña incorrecta o usuario sin permiso.");

@@ -134,6 +134,7 @@
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="ID Recepción" />
                                 <HBox spacing="6">
                                     <TextField fx:id="txtIdRecepcion" prefHeight="28" prefWidth="80" promptText="ID…" style="-fx-background-color:white; -fx-text-fill:black;                                                       -fx-border-color:purple; -fx-border-radius:6;                                                       -fx-background-radius:6;" />
+                                    <Button text="🔍" onAction="#abrirBuscadorRecepcion" prefHeight="28" prefWidth="32" style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" />
                                     <Button onAction="#cargarDesdeRecepcion" prefHeight="28" prefWidth="140" style="-fx-background-color:#48295a; -fx-text-fill:white;                                                    -fx-font-weight:bold; -fx-background-radius:8;" text="📋  Cargar recepción" />
                                     <Label fx:id="lblInfoRecepcion" style="-fx-text-fill:#3B1A5C; -fx-font-size:11px; -fx-font-weight:bold;" text="" />
                                 </HBox>

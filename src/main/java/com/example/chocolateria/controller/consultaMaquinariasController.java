@@ -112,7 +112,7 @@ public class consultaMaquinariasController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar maquinarias: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar maquinarias: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

@@ -91,7 +91,7 @@ public class consultaClientesController {
                 rs.getString("direccion"), rs.getString("estado")));
         Platform.runLater(() -> lista.setAll(tmp));
     } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar clientes: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar clientes: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

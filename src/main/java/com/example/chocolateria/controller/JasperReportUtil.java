@@ -20,7 +20,7 @@ public class JasperReportUtil {
             JasperReport report = JasperCompileManager.compileReport(jrxmlStream);
             return JasperFillManager.fillReport(report, params, conn);
         } catch (Exception e) {
-            throw new RuntimeException("Error al compilar reporte: " + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
+            throw new RuntimeException("Error al compilar reporte: " + e.getClass().getSimpleName() + " - " + "Ocurrió un error. Intente de nuevo.", e);
         }
     }
 
@@ -35,7 +35,7 @@ public class JasperReportUtil {
             JasperPrint print = compilarYLlenar(ruta, params, conn);
             JasperExportManager.exportReportToPdfFile(print, destino);
         } catch (Exception e) {
-            throw new RuntimeException("Error al exportar PDF: " + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
+            throw new RuntimeException("Error al exportar PDF: " + e.getClass().getSimpleName() + " - " + "Ocurrió un error. Intente de nuevo.", e);
         }
     }
 }

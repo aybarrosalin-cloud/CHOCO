@@ -189,7 +189,7 @@ public class EmailService {
             try {
                 enviar(destinatario, asunto, htmlCuerpo);
             } catch (Exception e) {
-                System.err.println("[EmailService] No se pudo enviar: " + e.getMessage());
+                System.err.println("[EmailService] No se pudo enviar: " + "Ocurrió un error. Intente de nuevo.");
             }
         });
         hilo.setDaemon(true);

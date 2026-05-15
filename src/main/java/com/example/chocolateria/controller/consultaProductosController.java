@@ -81,7 +81,7 @@ public class consultaProductosController {
                 rs.getString("categoria"), rs.getString("tipo"), rs.getInt("stock")));
         Platform.runLater(() -> lista.setAll(tmp));
     } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar productos: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar productos: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

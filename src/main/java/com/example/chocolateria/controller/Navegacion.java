@@ -17,7 +17,7 @@ public class Navegacion {
     // mapa fxml -> permiso requerido
     private static final Map<String, PermisoRol.Pantalla> PERMISOS_FXML = new HashMap<>();
 
-    // permisos alternativos (cualquiera del set basta)
+    // permisos alternativos (cualquiera del set)
     private static final Map<String, Set<PermisoRol.Pantalla>> EXT_PERMISOS_FXML = new HashMap<>();
 
     static {

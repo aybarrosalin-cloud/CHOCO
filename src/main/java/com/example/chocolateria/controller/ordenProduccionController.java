@@ -79,6 +79,31 @@ public class ordenProduccionController {
         });
 
 
+        dpFechaInicio.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaInicio.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaInicio.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de inicio no puede ser anterior a hoy.");
+            }
+        });
+        dpFechaEntrega.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaEntrega.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaEntrega.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
+            }
+        });
+
         Task<Void> cargar = new Task<>() {
             @Override protected Void call() {
                 return null;
@@ -86,6 +111,14 @@ public class ordenProduccionController {
         };
         new Thread(cargar).start();
         generarSiguienteId();
+    }
+
+    @FXML
+    private void abrirBuscadorCliente() {
+        popupBuscarClienteController.mostrar(c -> {
+            txtIdCliente.setText(String.valueOf(c.getIdCliente()));
+            buscarCliente();
+        });
     }
 
     @FXML
@@ -113,7 +146,7 @@ public class ordenProduccionController {
         } catch (NumberFormatException ex) {
             mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -142,7 +175,7 @@ public class ordenProduccionController {
         } catch (NumberFormatException ex) {
             mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -182,7 +215,7 @@ public class ordenProduccionController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -223,7 +256,7 @@ public class ordenProduccionController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -250,7 +283,7 @@ public class ordenProduccionController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Orden eliminada correctamente.");
                     limpiarCampos();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -294,7 +327,7 @@ public class ordenProduccionController {
                 mostrarAlerta(Alert.AlertType.WARNING, "No encontrado", "No existe una orden con el ID " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -398,6 +431,14 @@ public class ordenProduccionController {
         if (dpFechaOrden.getValue() == null || dpFechaInicio.getValue() == null ||
                 dpFechaEntrega.getValue() == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor completa las fechas.");
+            return false;
+        }
+        if (dpFechaInicio.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de inicio no puede ser anterior a hoy.");
+            return false;
+        }
+        if (dpFechaEntrega.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
             return false;
         }
         if (idResponsableSeleccionado == 0) {

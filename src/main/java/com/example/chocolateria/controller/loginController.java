@@ -96,7 +96,7 @@ public class loginController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error al abrir el menú: " + e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, "Error al abrir el menú: " + "Ocurrió un error. Intente de nuevo.").show();
         }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.chocolateria.controller.popupBuscarClienteController"
+      spacing="10" prefWidth="480" prefHeight="380"
+      style="-fx-background-color:#f9f4ff; -fx-padding:14;">
+
+    <Label text="Buscar Cliente" style="-fx-font-size:15px; -fx-font-weight:bold; -fx-text-fill:#3B1A5C;" />
+
+    <TextField fx:id="txtBuscar" promptText="Buscar por nombre, cédula o ID..."
+               style="-fx-background-color:white; -fx-border-color:#6d3c87; -fx-border-radius:6; -fx-background-radius:6;" />
+
+    <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS"
+               style="-fx-background-color:white; -fx-border-color:#d0c0e8; -fx-border-radius:6;">
+        <columns>
+            <TableColumn fx:id="colId"     text="ID"           prefWidth="60"  />
+            <TableColumn fx:id="colCedula" text="Cédula / RNC" prefWidth="140" />
+            <TableColumn fx:id="colNombre" text="Nombre"       prefWidth="240" />
+        </columns>
+        <placeholder><Label text="No hay clientes." /></placeholder>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_RIGHT">
+        <Button text="Seleccionar" onAction="#seleccionar"
+                style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:8;" />
+        <Button text="Cerrar" onAction="#cerrar"
+                style="-fx-background-color:#e8d5f0; -fx-text-fill:#3B1A5C; -fx-font-weight:bold; -fx-background-radius:8;" />
+    </HBox>
+</VBox>

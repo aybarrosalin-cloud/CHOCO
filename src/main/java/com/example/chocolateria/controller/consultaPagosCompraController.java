@@ -112,7 +112,7 @@ public class consultaPagosCompraController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar historial de pagos: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar historial de pagos: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

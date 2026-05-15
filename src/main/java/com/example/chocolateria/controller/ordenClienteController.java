@@ -96,7 +96,28 @@ public class ordenClienteController {
         tablaDetalle.setItems(listaDetalle);
         listaDetalle.addListener((javafx.collections.ListChangeListener<ordenDetalleModelo>) c -> recalcularTotal());
 
+        dpFecha1.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFecha1.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFecha1.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
+            }
+        });
+
         generarSiguienteId();
+    }
+
+    @FXML
+    private void abrirBuscadorCliente() {
+        popupBuscarClienteController.mostrar(c -> {
+            txtIdCliente.setText(String.valueOf(c.getIdCliente()));
+            buscarNombreCliente();
+        });
     }
 
     @FXML
@@ -121,7 +142,7 @@ public class ordenClienteController {
         } catch (NumberFormatException e) {
             txtNombreCliente.clear();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -147,7 +168,7 @@ public class ordenClienteController {
                     "No existe producto con código " + codigo + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -254,7 +275,7 @@ public class ordenClienteController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -307,7 +328,7 @@ public class ordenClienteController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -341,7 +362,7 @@ public class ordenClienteController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Orden eliminada correctamente.");
                     limpiarCampos();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -390,7 +411,7 @@ public class ordenClienteController {
                     "No existe una orden con el ID " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -416,7 +437,7 @@ public class ordenClienteController {
         } catch (NumberFormatException e) {
             txtCajero.clear();
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -462,7 +483,7 @@ public class ordenClienteController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar detalle", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -486,7 +507,7 @@ public class ordenClienteController {
             mostrarAlerta(Alert.AlertType.INFORMATION, "PDF exportado",
                 "Guardado en:\n" + archivo.getAbsolutePath());
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al exportar PDF", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al exportar PDF", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -521,6 +542,10 @@ public class ordenClienteController {
         }
         if (dpFecha.getValue() == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campo requerido", "Selecciona la fecha de registro.");
+            return false;
+        }
+        if (dpFecha1.getValue() != null && dpFecha1.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
             return false;
         }
         if (cbMetodoPago.getValue() == null) {
@@ -722,7 +747,7 @@ public class ordenClienteController {
             params.put("LOGO", getClass().getResourceAsStream("/com/example/chocolateria/logo.png"));
             JasperReportUtil.mostrarReporte("/reportes/facturalachoco.jrxml", params, conn);
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar factura", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar factura", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

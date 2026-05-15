@@ -87,10 +87,10 @@ public class ventaController {
     public void initialize() {
         actualizarBotones(0);
         CargarPerfil.aplicar(lblUsuario, imgFotoPerfil);
-        cbTipoPago.setItems(FXCollections.observableArrayList("Contado", "Crédito"));
+        cbTipoPago.setItems(FXCollections.observableArrayList("Contado", "CrÃ©dito"));
         cbMetodoPago.setItems(FXCollections.observableArrayList("Efectivo", "Transferencia", "Tarjeta", "Cheque"));
         cbMetodoPagoAbono.setItems(FXCollections.observableArrayList("Efectivo", "Transferencia", "Tarjeta", "Cheque"));
-        cbTipoNcf.setItems(FXCollections.observableArrayList("B01 - Crédito Fiscal", "B02 - Consumidor Final"));
+        cbTipoNcf.setItems(FXCollections.observableArrayList("B01 - CrÃ©dito Fiscal", "B02 - Consumidor Final"));
         cbTipoNcf.setValue("B02 - Consumidor Final");
 
         // calcular itbis y total cuando cambia el descuento
@@ -171,10 +171,18 @@ public class ventaController {
     }
 
     @FXML
+    private void abrirBuscadorOrden() {
+        popupBuscarOrdenClienteController.mostrar(id -> {
+            txtIdOrden.setText(id);
+            cargarDesdeOrden();
+        });
+    }
+
+    @FXML
     private void cargarDesdeOrden() {
         String idTexto = txtIdOrden.getText().trim();
         if (idTexto.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Escribe el ID de la orden.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Escribe el ID de la orden.");
             return;
         }
         try {
@@ -198,7 +206,7 @@ public class ventaController {
                     subtotalBase     = rs.getDouble("subtotal_calc");
 
                     String resumen = (productos != null && !productos.isBlank())
-                            ? cliente + " — " + productos
+                            ? cliente + " â€” " + productos
                             : cliente;
                     lblInfoOrden.setText(resumen);
                     txtSubtotal.setText(String.format("%.2f", subtotalBase));
@@ -213,9 +221,9 @@ public class ventaController {
                 }
             }
         } catch (NumberFormatException ex) {
-            mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
+            mostrarAlerta(Alert.AlertType.WARNING, "ID invÃ¡lido", "El ID debe ser un nÃºmero.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
@@ -223,7 +231,7 @@ public class ventaController {
     private void buscarEmpleado() {
         String idTexto = txtIdEmpleado.getText().trim();
         if (idTexto.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Escribe el ID del empleado.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Escribe el ID del empleado.");
             return;
         }
         try {
@@ -242,16 +250,16 @@ public class ventaController {
                 }
             }
         } catch (NumberFormatException ex) {
-            mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número.");
+            mostrarAlerta(Alert.AlertType.WARNING, "ID invÃ¡lido", "El ID debe ser un nÃºmero.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
     @FXML
     private void registrarVenta() {
         if (estadoActual == 1) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Acción no disponible", "Ya hay un registro cargado. Usa 'Limpiar' para registrar uno nuevo.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "AcciÃ³n no disponible", "Ya hay un registro cargado. Usa 'Limpiar' para registrar uno nuevo.");
             return;
         }
         if (!validarCamposVenta()) return;
@@ -332,22 +340,22 @@ public class ventaController {
                 listaVentas.add(0, nueva);
 
                 actualizarResumenUI(montoPagado, total, estadoPago);
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito",
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Ã‰xito",
                         "Venta registrada. NCF: " + ncf + "\nTotal: RD$ " + String.format("%.2f", total));
             }
 
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Error", "Verifica los montos ingresados.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar venta", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar venta", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
     @FXML
     private void registrarAbono() {
         if (idVentaSeleccionada == 0) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención",
-                    "Selecciona una venta de la tabla o regístrala primero.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n",
+                    "Selecciona una venta de la tabla o regÃ­strala primero.");
             return;
         }
         if (!validarCamposAbono()) return;
@@ -412,14 +420,14 @@ public class ventaController {
 
                 actualizarResumenUI(nuevoPagado, total, nuevoEstado);
                 limpiarCamposAbono();
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito",
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Ã‰xito",
                         String.format("Abono de RD$ %.2f registrado. Estado: %s", montoAbono, nuevoEstado));
             }
 
         } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Monto inválido", "El monto debe ser un número válido.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Monto invÃ¡lido", "El monto debe ser un nÃºmero vÃ¡lido.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar abono", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al registrar abono", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
@@ -427,14 +435,14 @@ public class ventaController {
     private void fnBuscar() {
         String idTexto = txtIdVenta.getText().trim();
         if (idTexto.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Escribe un ID para buscar.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Escribe un ID para buscar.");
             return;
         }
         int idBuscar;
         try {
             idBuscar = Integer.parseInt(idTexto);
         } catch (NumberFormatException ex) {
-            mostrarAlerta(Alert.AlertType.WARNING, "ID inválido", "El ID debe ser un número entero.");
+            mostrarAlerta(Alert.AlertType.WARNING, "ID invÃ¡lido", "El ID debe ser un nÃºmero entero.");
             return;
         }
         String sql = "SELECT v.id_venta, v.id_orden, v.fecha_venta, " +
@@ -482,14 +490,14 @@ public class ventaController {
                         "No existe una venta con el ID " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al buscar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al buscar", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
     @FXML
     private void fnEditar() {
         if (estadoActual != 1) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Busca una venta primero para poder editarla.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Busca una venta primero para poder editarla.");
             return;
         }
         if (dpFechaVenta.getValue() == null) {
@@ -525,12 +533,12 @@ public class ventaController {
                     break;
                 }
             }
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Venta actualizada correctamente.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Ã‰xito", "Venta actualizada correctamente.");
             limpiar();
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Error", "Verifica los montos ingresados.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar venta", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al editar venta", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
@@ -542,7 +550,7 @@ public class ventaController {
                     .filter(v -> String.valueOf(v.getIdVenta()).equals(txtIdVenta.getText().trim()))
                     .findFirst().orElse(null);
         if (sel == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Busca una venta por ID para poder eliminarla.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Busca una venta por ID para poder eliminarla.");
             return;
         }
         if (!"Pendiente".equals(sel.getEstadoPago())) {
@@ -552,9 +560,9 @@ public class ventaController {
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirmar eliminación");
+        confirm.setTitle("Confirmar eliminaciÃ³n");
         confirm.setHeaderText(null);
-        confirm.setContentText("¿Eliminar la venta #" + sel.getIdVenta() + "?");
+        confirm.setContentText("Â¿Eliminar la venta #" + sel.getIdVenta() + "?");
 
         confirm.showAndWait().ifPresent(resp -> {
             if (resp == ButtonType.OK) {
@@ -565,10 +573,10 @@ public class ventaController {
                     ps.executeUpdate();
                     listaVentas.remove(sel);
                     listaPagos.clear();
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Venta eliminada.");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Ã‰xito", "Venta eliminada.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar", "Ocurrio un error inesperado. Intente nuevamente.");
                 }
             }
         });
@@ -687,7 +695,7 @@ public class ventaController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar ventas", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar ventas", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
@@ -715,7 +723,7 @@ public class ventaController {
             if (!listaPagos.isEmpty())
                 cbMetodoPago.setValue(listaPagos.get(0).getMetodoPago());
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar pagos", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al cargar pagos", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 
@@ -795,7 +803,7 @@ public class ventaController {
             return false;
         }
         if (cbMetodoPagoAbono.getValue() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Método requerido", "Selecciona el método de pago.");
+            mostrarAlerta(Alert.AlertType.WARNING, "MÃ©todo requerido", "Selecciona el mÃ©todo de pago.");
             return false;
         }
         return true;
@@ -815,7 +823,7 @@ public class ventaController {
     @FXML
     private void generarReporte() {
         if (idVentaSeleccionada == 0) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Selecciona una venta de la tabla antes de generar el reporte.");
+            mostrarAlerta(Alert.AlertType.WARNING, "AtenciÃ³n", "Selecciona una venta de la tabla antes de generar el reporte.");
             return;
         }
         java.util.Map<String, Object> params = new java.util.HashMap<>();
@@ -824,7 +832,7 @@ public class ventaController {
         try (java.sql.Connection conn = new conexion().establecerConexion()) {
             JasperReportUtil.mostrarReporte("/reportes/facturalachoco.jrxml", params, conn);
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", "Ocurrio un error inesperado. Intente nuevamente.");
         }
     }
 

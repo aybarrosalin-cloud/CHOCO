@@ -25,7 +25,7 @@ public class CifradoUtil {
             return saltB64 + SEPARADOR + hashB64;
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al cifrar la contraseña: " + e.getMessage(), e);
+            throw new RuntimeException("Error al cifrar la contraseña: " + "Ocurrió un error. Intente de nuevo.", e);
         }
     }
 

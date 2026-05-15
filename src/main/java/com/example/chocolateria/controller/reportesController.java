@@ -138,7 +138,7 @@ public class reportesController {
                 }
                 if (coincide) todos.add(fila);
             }
-        } catch (Exception e) { mostrarAlerta("Error al filtrar: " + e.getMessage()); return; }
+        } catch (Exception e) { mostrarAlerta("Error al filtrar: " + "Ocurrió un error. Intente de nuevo."); return; }
 
         tablaResultados.setItems(todos);
         lblTotal.setText("Resultados filtrados: " + todos.size());
@@ -189,7 +189,7 @@ public class reportesController {
             lblTotal.setText("Total de registros: " + data.size());
 
         } catch (Exception e) {
-            mostrarAlerta("Error al ejecutar el reporte: " + e.getMessage());
+            mostrarAlerta("Error al ejecutar el reporte: " + "Ocurrió un error. Intente de nuevo.");
         }
     }
 

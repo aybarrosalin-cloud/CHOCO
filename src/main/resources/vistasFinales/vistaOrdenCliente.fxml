@@ -133,6 +133,8 @@
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="Cliente (ID)" />
                                 <HBox spacing="4" alignment="CENTER_LEFT">
                                     <TextField fx:id="txtIdCliente" prefHeight="28" prefWidth="55" promptText="ID" style="-fx-background-color:white; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" />
+                                    <Button text="🔍" onAction="#abrirBuscadorCliente" prefHeight="28" prefWidth="32"
+                                            style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" />
                                     <TextField fx:id="txtNombreCliente" editable="false" prefHeight="28" promptText="Nombre cliente" style="-fx-background-color:#f0eaf8; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" HBox.hgrow="ALWAYS" />
                                 </HBox>
                             </VBox>

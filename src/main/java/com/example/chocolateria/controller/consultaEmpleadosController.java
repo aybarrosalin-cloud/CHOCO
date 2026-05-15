@@ -104,7 +104,7 @@ public class consultaEmpleadosController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar empleados: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar empleados: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

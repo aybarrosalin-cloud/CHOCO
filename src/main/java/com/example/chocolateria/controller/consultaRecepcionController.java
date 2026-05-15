@@ -83,7 +83,7 @@ public class consultaRecepcionController {
         Platform.runLater(() -> lista.setAll(tmp));
     }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error al cargar recepciones: " + e.getMessage()).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error al cargar recepciones: " + "Ocurrió un error. Intente de nuevo.").showAndWait();
         }
     }
 

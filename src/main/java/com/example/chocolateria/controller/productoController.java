@@ -120,7 +120,7 @@ public class productoController {
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING,"Precios inválidos","Los precios deben ser números válidos.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -154,7 +154,7 @@ public class productoController {
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING,"Precios inválidos","Los precios deben ser números válidos.");
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR,"Error al editar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR,"Error al editar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -173,7 +173,7 @@ public class productoController {
                     mostrarAlerta(Alert.AlertType.INFORMATION,"Éxito","Producto eliminado.");
                     limpiar();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -204,7 +204,7 @@ public class productoController {
                 mostrarAlerta(Alert.AlertType.WARNING,"No encontrado","No existe producto con código " + cod + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR,"Error de búsqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR,"Error de búsqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

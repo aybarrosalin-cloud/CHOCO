@@ -61,6 +61,22 @@ public class salidaProductosController {
     }
 
     @FXML
+    private void abrirBuscadorOrdenCliente() {
+        popupBuscarOrdenClienteController.mostrar(id -> {
+            txtIdOrdenCliente.setText(id);
+            cargarDesdeOrden();
+        });
+    }
+
+    @FXML
+    private void abrirBuscadorProducto() {
+        popupBuscarProductoController.mostrar(codigo -> {
+            txtCodigoDetalle.setText(codigo);
+            buscarProductoDetalle();
+        });
+    }
+
+    @FXML
     private void buscarProductoDetalle() {
         String codigo = txtCodigoDetalle.getText().trim();
         if (codigo.isEmpty()) {
@@ -86,7 +102,7 @@ public class salidaProductosController {
                         "no existe un producto con el codigo " + codigo + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -112,7 +128,7 @@ public class salidaProductosController {
                         "no se encontro ninguna orden con ese id.");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "error", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "error", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -235,7 +251,7 @@ public class salidaProductosController {
             limpiarCampos();
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "error al guardar", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "error al guardar", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -268,7 +284,7 @@ public class salidaProductosController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "exito", "salida eliminada correctamente.");
                     limpiarCampos();
                 } catch (Exception e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "error al eliminar", e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "error al eliminar", "Ocurrió un error. Intente de nuevo.");
                 }
             }
         });
@@ -313,7 +329,7 @@ public class salidaProductosController {
                         "no existe una salida con el id " + idBuscar + ".");
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "error de busqueda", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "error de busqueda", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
@@ -356,7 +372,7 @@ public class salidaProductosController {
                 ));
             }
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "error al cargar detalle", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "error al cargar detalle", "Ocurrió un error. Intente de nuevo.");
         }
     }
 

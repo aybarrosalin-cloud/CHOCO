@@ -129,8 +129,9 @@
                             </VBox>
                             <VBox minHeight="52" spacing="3" HBox.hgrow="ALWAYS">
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="Cliente (ID)" />
-                                <HBox spacing="4" alignment="CENTER_LEFT">
+                                <HBox alignment="CENTER_LEFT" spacing="4">
                                     <TextField fx:id="txtIdCliente" prefHeight="28" prefWidth="55" promptText="ID" style="-fx-background-color:white; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" />
+                                    <Button onAction="#abrirBuscadorCliente" prefHeight="28" prefWidth="38.0" style="-fx-background-color:#6d3c87; -fx-text-fill:white; -fx-background-radius:6; -fx-cursor:hand; -fx-font-size:13;" text="🔍" />
                                     <TextField fx:id="txtNombreCliente" editable="false" prefHeight="28" promptText="Nombre cliente" style="-fx-background-color:#f0eaf8; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" HBox.hgrow="ALWAYS" />
                                 </HBox>
                             </VBox>
@@ -144,7 +145,7 @@
                             </VBox>
                             <VBox minHeight="52" spacing="3" HBox.hgrow="ALWAYS">
                                 <Label style="-fx-font-weight:bold; -fx-font-size:11px; -fx-text-fill:#3B1A5C;" text="Atendido por (ID)" />
-                                <HBox spacing="4" alignment="CENTER_LEFT">
+                                <HBox alignment="CENTER_LEFT" spacing="4">
                                     <TextField fx:id="txtIdEmpleado" prefHeight="28" prefWidth="55" promptText="ID" style="-fx-background-color:white; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" />
                                     <TextField fx:id="txtNombreEmpleado" editable="false" prefHeight="28" promptText="Nombre empleado" style="-fx-background-color:#f0eaf8; -fx-border-color:purple; -fx-border-radius:6; -fx-background-radius:6;" HBox.hgrow="ALWAYS" />
                                 </HBox>

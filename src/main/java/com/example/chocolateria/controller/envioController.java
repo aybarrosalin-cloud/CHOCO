@@ -112,6 +112,20 @@ public class envioController {
             }
         };
         new Thread(cargar).start();
+
+        dpFechaEntrega.setDayCellFactory(picker -> new DateCell() {
+            @Override public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        dpFechaEntrega.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && newVal.isBefore(LocalDate.now())) {
+                dpFechaEntrega.setValue(null);
+                mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
+            }
+        });
+
         generarSiguienteId();
     }
 
@@ -138,7 +152,7 @@ public class envioController {
                 tmpMapa.put(item, id);
             }
         } catch (Exception e) {
-            String msg = e.getMessage();
+            String msg = "Ocurrió un error. Intente de nuevo.";
             Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR,"Error",msg));
             return;
         }
@@ -153,7 +167,7 @@ public class envioController {
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) tmp.add(rs.getString("nombre"));
         } catch (Exception e) {
-            String msg = e.getMessage();
+            String msg = "Ocurrió un error. Intente de nuevo.";
             Platform.runLater(() -> mostrarAlerta(Alert.AlertType.ERROR,"Error",msg));
             return;
         }
@@ -190,7 +204,7 @@ public class envioController {
             int nuevoId = rs.next() ? rs.getInt(1) : 0;
             mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Envio #" + nuevoId + " registrado correctamente.");
             limpiar();
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al guardar","Ocurrió un error. Intente de nuevo."); }
     }
 
     @FXML
@@ -216,7 +230,7 @@ public class envioController {
             ps.executeUpdate();
             mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Envio actualizado correctamente.");
             limpiar();
-        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al editar",e.getMessage()); }
+        } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al editar","Ocurrió un error. Intente de nuevo."); }
     }
 
     @FXML
@@ -232,7 +246,7 @@ public class envioController {
                     ps.setInt(1, envioCargado.getIdEnvio()); ps.executeUpdate();
                     mostrarAlerta(Alert.AlertType.INFORMATION,"Exito","Envio eliminado correctamente.");
                     limpiar();
-                } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar",e.getMessage()); }
+                } catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR,"Error al eliminar","Ocurrió un error. Intente de nuevo."); }
             }
         });
     }
@@ -316,6 +330,10 @@ public class envioController {
     private boolean validarCampos() {
         if (cbCliente.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona un cliente."); return false; }
         if (dpFechaEnvio.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona la fecha de envio."); return false; }
+        if (dpFechaEntrega.getValue() != null && dpFechaEntrega.getValue().isBefore(LocalDate.now())) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Fecha inválida", "La fecha de entrega no puede ser anterior a hoy.");
+            return false;
+        }
         if (cbTransportista.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona un transportista."); return false; }
         if (cbTemperatura.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona la temperatura de transporte."); return false; }
         if (cbEstado.getValue() == null) { mostrarAlerta(Alert.AlertType.WARNING,"Requerido","Selecciona el estado."); return false; }
@@ -343,7 +361,7 @@ public class envioController {
         try (Connection conn = con.establecerConexion()) {
             JasperReportUtil.mostrarReporte("/reportes/entregalachoco.jrxml", params, conn);
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", e.getMessage());
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al generar reporte", "Ocurrió un error. Intente de nuevo.");
         }
     }
 
